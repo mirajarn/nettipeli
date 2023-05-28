@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import TextFieldContainer from './TextFieldContainer';
-import PopCulture from './PopCulture';
+import Tehtavia from './Tehtavia';
+import Tietovisa from './Tietovisa';
 import firebase from 'firebase/compat/app';
 import './App.css';
-import NeverHaveIEver from './NeverHaveIEver';
 
 const MainPage = () => {
   const [list, setList] = useState([]);
@@ -24,12 +24,13 @@ const MainPage = () => {
   };
 
   //Tällä kirjoitetaan databaseen tietoa
-
-  /*const db = firebase.firestore();
-  const docRef = db.collection('react-app').doc('Pop Culture');
+/*
+  const db = firebase.firestore();
+  const docRef = db.collection('react-app').doc('');
 
   const fieldsToAdd = {
-  
+    
+    
   };
 
   docRef
@@ -42,12 +43,11 @@ const MainPage = () => {
     });
   
 */
-
   return (
     <div className="container">
       <TextFieldContainer onTextFieldChange={handleTextFieldChange} />
       <button className="start-button" onClick={handleButtonClick}>
-        Start
+        Aloita
       </button>
       <h1 className="players-heading">Pelaajat:</h1>
       <ul className="players-list">
@@ -58,10 +58,8 @@ const MainPage = () => {
 
       {showButtons && 
         <div>
-          <section id='popculture' >
-          <PopCulture/>
-          </section>
-          <NeverHaveIEver/>
+          <Tietovisa/>
+          <Tehtavia/>
         </div>
       }
     </div>

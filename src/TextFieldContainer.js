@@ -19,7 +19,7 @@ const TextFieldContainer = ({ onTextFieldChange }) => {
 
   return (
     <div>
-      {textFields.length < 20 && <button className="add-button" onClick={addTextField}>Add Text Field</button>}
+      {textFields.length < 20 && <button className="add-button" onClick={addTextField}>Lisää nimi</button>}
       {textFields.map((textField, index) => (
         <div key={index}>
           <input className="text-field" value={textField || ''} onChange={(e) => handleTextFieldChange(index, e.target.value)} />
