@@ -1,7 +1,10 @@
-import { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { db } from './firebase';
+import JaaNimetTiimeihin from './JaaNimetTiimeihin';
 
-function ValitseTiimiNimi({ names, setValues }) {
+function ValitseTiimiNimi({ setValues, team1 }) {
+  const [tiimitNimet, setTiimiNimet] = useState([]);
+
   useEffect(() => {
     const fetchData = async () => {
       const docRefTeamName = db.collection('react-app').doc('Team Names');
@@ -13,6 +16,8 @@ function ValitseTiimiNimi({ names, setValues }) {
 
           const TeamName1 = valueFieldsTeamName[0];
           const TeamName2 = valueFieldsTeamName[1];
+
+          setTiimiNimet([TeamName1, TeamName2]);
 
           setValues((prevValues) => {
             return prevValues.map((value) => {
@@ -36,7 +41,16 @@ function ValitseTiimiNimi({ names, setValues }) {
     return [name1, name2][randomIndex];
   }
 
-  return null;
+  return (
+    <>
+      {tiimitNimet.length > 0 &&  (
+        <div>
+          <p>{tiimitNimet[0]}</p>
+          <p>{tiimitNimet[1]}</p>
+        </div>
+      )}
+    </>
+  );
 }
 
 export default ValitseTiimiNimi;
