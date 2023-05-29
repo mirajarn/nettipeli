@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import TextFieldContainer from './TextFieldContainer';
 import Tehtavia from './Tehtavia';
 import Tietovisa from './Tietovisa';
-import JaaNimetTiimeihin from './JaaNimetTiimeihin';
-import firebase from 'firebase/compat/app';
 import './App.css';
+import GeneroiNimiTietovisaan from './GeneroiNimiTietovisaan';
 
 const MainPage = () => {
   const [list, setList] = useState([]);
@@ -23,6 +22,27 @@ const MainPage = () => {
     setTextFieldValue('');
     setShowButtons(true);
   };
+ //Tällä kirjoitetaan databaseen tietoa
+/*
+  const db = firebase.firestore();
+  const docRef = db.collection('react-app').doc('');
+
+  const fieldsToAdd = {
+    
+    
+  };
+
+  docRef
+    .update(fieldsToAdd)
+    .then(() => {
+      console.log('Fields added successfully!');
+    })
+    .catch((error) => {
+      console.error('Error adding fields:', error);
+    });
+  
+*/
+
 
   return (
     <div className="container">
@@ -31,11 +51,15 @@ const MainPage = () => {
         Aloita
       </button>
       <h1 className="players-heading">Pelaajat:</h1>
-          <JaaNimetTiimeihin memberNames={list} />
-
+      <ul className="players-list">
+        {list.map((item, index) => (
+          <li key={index}>{item}</li>
+        ))}
+      </ul>
       {showButtons && (
         <div>
           <Tehtavia />
+          <Tietovisa tietovisaMembers={list}  />
 
         </div>
       )}

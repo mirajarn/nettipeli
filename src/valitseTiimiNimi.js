@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { db } from './firebase';
-import JaaNimetTiimeihin from './JaaNimetTiimeihin';
 
 function ValitseTiimiNimi({ setValues, team1 }) {
   const [tiimitNimet, setTiimiNimet] = useState([]);
