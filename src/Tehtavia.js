@@ -85,18 +85,18 @@ function Tehtavia({ tiimi1, tiimi2 }) {
       {showItems && (
         <div>
 
-<h1>Tiimit:</h1>
+          <h1>Tiimit:</h1>
 
           {tiimitNimet.length > 0 && (
             <div>
               <h2>{tiimitNimet[0]}</h2>
               {tiimi1.map((item, index) => (
-            <p key={index}>{item}</p>
-          ))}
+                <p key={index}>{item}</p>
+              ))}
               <h2>{tiimitNimet[1]}</h2>
               {tiimi2.map((item, index) => (
-            <p key={index}>{item}</p>
-          ))}
+                <p key={index}>{item}</p>
+              ))}
             </div>
           )}
           <h1>Tee mitä käsketään!</h1>
