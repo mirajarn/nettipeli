@@ -4,31 +4,32 @@ import { db } from './firebase';
 function NeverHaveIEver() {
   const [values, setValues] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [showItems, setShowItems] = useState(false);
+  const [showItemsSuomi, setShowItemsSuomi] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
-      const docRef = db.collection('Never have I ever').doc('Suomi');
+      if (showItemsSuomi) { // Check if the "Suomi" button is pressed
+        const docRef = db.collection('Never have I ever').doc('Suomi');
 
-      try {
-        const docSnapshot = await docRef.get();
+        try {
+          const docSnapshot = await docRef.get();
 
-        if (docSnapshot.exists) {
-          const data = docSnapshot.data();
-          const valueFields = Object.values(data);
+          if (docSnapshot.exists) {
+            const data = docSnapshot.data();
+            const valueFields = Object.values(data);
 
-          setValues(valueFields);
-        } else {
-          console.log('Document does not exist');
+            setValues(valueFields);
+          } else {
+            console.log('Document does not exist');
+          }
+        } catch (error) {
+          console.error('Error fetching Firestore data:', error);
         }
-      } catch (error) {
-        console.error('Error fetching Firestore data:', error);
       }
     };
 
     fetchData();
-  }, []);
-
+  }, [showItemsSuomi]); 
 
   const handleNext = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % values.length);
@@ -38,16 +39,16 @@ function NeverHaveIEver() {
     setCurrentIndex((prevIndex) => (prevIndex - 1 + values.length) % values.length);
   };
 
-  const handleButtonClick = () => {
-    setShowItems(true);
+  const handleButtonClickSuomi = () => {
+    setShowItemsSuomi(true);
   };
 
   return (
     <div>
-      <button onClick={handleButtonClick}>En ole koskaan</button>
-      {showItems && (
+      <h4>Mitä versiota haluat pelata?</h4>
+      <button onClick={handleButtonClickSuomi}>Suomi</button>
+      {showItemsSuomi && (
         <div>
-          <h1>En ole koskaan</h1>
           {values.length > 0 && (
             <div>
               <p>{values[currentIndex]}</p>
@@ -57,10 +58,7 @@ function NeverHaveIEver() {
           )}
         </div>
       )}
-
     </div>
-
-
   );
 }
 

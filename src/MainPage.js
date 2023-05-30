@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import TextFieldContainer from './TextFieldContainer';
 import Tehtavia from './Tehtavia';
 import Tietovisa from './Tietovisa';
 import './App.css';
 import NeverHaveIEver from './NeverHaveIEver';
+import ScrollToTop from './ScrollToTop';
 
 const MainPage = () => {
   const [list, setList] = useState([]);
@@ -11,6 +12,18 @@ const MainPage = () => {
   const [textFieldValue, setTextFieldValue] = useState('');
   const [team1, setTeam1] = useState([]);
   const [team2, setTeam2] = useState([]);
+
+
+  const tehtavia = useRef(null);
+  const tietovisa = useRef(null);
+  const enolekoskaan = useRef(null);
+
+  const scrollToSection = (elementRef) => {
+    window.scrollTo({
+      top: elementRef.current.offsetTop,
+      behavior: "smooth",
+    });
+  };
 
 
 
@@ -26,26 +39,7 @@ const MainPage = () => {
     setTextFieldValue('');
     setShowButtons(true);
   };
-  //Tällä kirjoitetaan databaseen tietoa
-  /*
-    const db = firebase.firestore();
-    const docRef = db.collection('react-app').doc('');
-  
-    const fieldsToAdd = {
-      
-      
-    };
-  
-    docRef
-      .update(fieldsToAdd)
-      .then(() => {
-        console.log('Fields added successfully!');
-      })
-      .catch((error) => {
-        console.error('Error adding fields:', error);
-      });
-    
-  */
+
   useEffect(() => {
     const shuffleNames = () => {
       const shuffledNames = shuffleArray(list);
@@ -72,23 +66,50 @@ const MainPage = () => {
 
   return (
     <div className="container">
-      <TextFieldContainer onTextFieldChange={handleTextFieldChange} />
+ <ScrollToTop />
+
+ <div className="hero">
+        <ul>
+          <li onClick={() => scrollToSection(tehtavia)} className="link">
+            Tehtäviä
+          </li>
+          <li onClick={() => scrollToSection(tietovisa)} className="link">
+            Tietovisa
+          </li>
+          <li onClick={() => scrollToSection(enolekoskaan)} className="link">
+            En ole koskaan
+          </li>
+        </ul>
+
+        <TextFieldContainer onTextFieldChange={handleTextFieldChange} />
       <button className="start-button" onClick={handleButtonClick}>
         Aloita
       </button>
       <h1 className="players-heading">Pelaajat:</h1>
-      <ul className="players-list">
+      <div className='horizontal-list'>
         {list.map((item, index) => (
-          <li key={index}>{item}</li>
+          <p key={index}>{item}</p>
         ))}
-      </ul>
-      {showButtons && (
-        <div>
-          <Tehtavia tiimi1={team1} tiimi2={team2} TehtaviaMembers={list} />
-          <Tietovisa tietovisaMembers={list} />
-          <NeverHaveIEver/>
-        </div>
-      )}
+</div>
+      </div>
+      <div ref={tehtavia} className="tehtavia">
+        <h3>Tehtäviä</h3>
+        <Tehtavia tiimi1={team1} tiimi2={team2} TehtaviaMembers={list} />
+      </div>
+      <div ref={tietovisa} className="tietovisa">
+        <h3>Tietovisa</h3>
+        <Tietovisa tietovisaMembers={list} />
+      </div>
+      <div ref={enolekoskaan} className="enolekoskaan">
+        <h3>En ole koskaan</h3>
+        <NeverHaveIEver/>
+      </div>
+
+
+
+
+
+
     </div>
   );
 };
