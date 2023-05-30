@@ -85,12 +85,15 @@ const MainPage = () => {
       <button className="start-button" onClick={handleButtonClick}>
         Aloita
       </button>
+      {showButtons && (
+        <>
       <h1 className="players-heading">Pelaajat:</h1>
-      <div className='horizontal-list'>
+      <div className='horizontal-list'/>
         {list.map((item, index) => (
           <p key={index}>{item}</p>
         ))}
-</div>
+</>
+)}
       </div>
       <div ref={tehtavia} className="tehtavia">
         <h3>Tehtäviä</h3>
