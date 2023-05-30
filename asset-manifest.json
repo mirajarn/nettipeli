@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/nettipeli/static/css/main.da96a9e2.css",
-    "main.js": "/nettipeli/static/js/main.09b2daa8.js",
+    "main.js": "/nettipeli/static/js/main.0c15e0f5.js",
     "static/js/787.2b184d16.chunk.js": "/nettipeli/static/js/787.2b184d16.chunk.js",
     "index.html": "/nettipeli/index.html",
     "main.da96a9e2.css.map": "/nettipeli/static/css/main.da96a9e2.css.map",
-    "main.09b2daa8.js.map": "/nettipeli/static/js/main.09b2daa8.js.map",
+    "main.0c15e0f5.js.map": "/nettipeli/static/js/main.0c15e0f5.js.map",
     "787.2b184d16.chunk.js.map": "/nettipeli/static/js/787.2b184d16.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.da96a9e2.css",
-    "static/js/main.09b2daa8.js"
+    "static/js/main.0c15e0f5.js"
   ]
 }
