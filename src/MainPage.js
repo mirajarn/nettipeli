@@ -1,14 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import TextFieldContainer from './TextFieldContainer';
 import Tehtavia from './Tehtavia';
 import Tietovisa from './Tietovisa';
 import './App.css';
-import GeneroiNimiTietovisaan from './GeneroiNimiTietovisaan';
 
 const MainPage = () => {
   const [list, setList] = useState([]);
   const [showButtons, setShowButtons] = useState(false);
   const [textFieldValue, setTextFieldValue] = useState('');
+  const [team1, setTeam1] = useState([]);
+  const [team2, setTeam2] = useState([]);
+
+  
 
   const handleTextFieldChange = (newList) => {
     setList(newList);
@@ -42,7 +45,29 @@ const MainPage = () => {
     });
   
 */
+useEffect(() => {
+  const shuffleNames = () => {
+    const shuffledNames = shuffleArray(list);
+    const halfLength = Math.ceil(shuffledNames.length / 2);
 
+    const team1Names = shuffledNames.slice(0, halfLength);
+    const team2Names = shuffledNames.slice(halfLength);
+
+    setTeam1(team1Names);
+    setTeam2(team2Names);
+  };
+
+  shuffleNames();
+}, [list]);
+
+const shuffleArray = (array) => {
+  const shuffledArray = [...array];
+  for (let i = shuffledArray.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+  }
+  return shuffledArray;
+};
 
   return (
     <div className="container">
@@ -58,9 +83,8 @@ const MainPage = () => {
       </ul>
       {showButtons && (
         <div>
-          <Tehtavia />
+          <Tehtavia tiimi1={team1} tiimi2={team2} TehtaviaMembers={list} />
           <Tietovisa tietovisaMembers={list}  />
-
         </div>
       )}
     </div>
