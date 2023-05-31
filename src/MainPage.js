@@ -5,6 +5,7 @@ import Tietovisa from './Tietovisa';
 import './App.css';
 import NeverHaveIEver from './NeverHaveIEver';
 import ScrollToTop from './ScrollToTop';
+import firebase from 'firebase/compat/app';
 
 const MainPage = () => {
   const [list, setList] = useState([]);
@@ -13,10 +14,10 @@ const MainPage = () => {
   const [team1, setTeam1] = useState([]);
   const [team2, setTeam2] = useState([]);
 
-
   const tehtavia = useRef(null);
   const tietovisa = useRef(null);
   const enolekoskaan = useRef(null);
+
 
   const scrollToSection = (elementRef) => {
     window.scrollTo({
@@ -24,7 +25,6 @@ const MainPage = () => {
       behavior: "smooth",
     });
   };
-
 
 
   const handleTextFieldChange = (newList) => {

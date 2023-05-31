@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { db } from './firebase';
+import { TarkistaTehtaviaPop } from './TarkistaTehtaviaPop';
+
 
 function Tehtavia({ tiimi1, tiimi2 }) {
   const [values, setValues] = useState([]);
@@ -47,7 +49,9 @@ function Tehtavia({ tiimi1, tiimi2 }) {
           setValues((prevValues) => {
             return prevValues.map((value) => {
               if (value.includes('x')) {
-                return value.replace('x', getRandomTeamName(TeamName1, TeamName2));
+                const replacedValue = value.replace('x', getRandomTeamName(TeamName1, TeamName2));
+
+                return replacedValue
               }
               return value;
             });
@@ -61,6 +65,98 @@ function Tehtavia({ tiimi1, tiimi2 }) {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const docRefPop = db.collection('react-app').doc('TehtäviäKysymysPop');
+      try {
+        const docSnapshotPop = await docRefPop.get();
+        if (docSnapshotPop.exists) {
+          const dataPop = docSnapshotPop.data();
+          const valueFieldsPop = Object.values(dataPop);
+
+
+          const numero = getRandomKysymys(valueFieldsPop)
+          const vastaus = valueFieldsPop[numero]
+          setValues((prevValues) => {
+            return prevValues.map((value) => {
+              if (value.includes('popKysymys')) {
+
+                return value.replace('popKysymys', vastaus);
+              }
+              return value;
+            });
+          });
+        }
+      } catch (error) {
+        console.error('Error fetching Firestore data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const docRefHistoria = db.collection('react-app').doc('TehtäviäKysymysHistoria');
+      try {
+        const docSnapshotHistoria = await docRefHistoria.get();
+        if (docSnapshotHistoria.exists) {
+          const dataHistoria = docSnapshotHistoria.data();
+          const valueFieldsHistoria = Object.values(dataHistoria);
+
+          const numero = getRandomKysymys(valueFieldsHistoria)
+          const vastaus = valueFieldsHistoria[numero]
+          setValues((prevValues) => {
+            return prevValues.map((value) => {
+              if (value.includes('historiaKysymys')) {
+
+                return value.replace('historiaKysymys', vastaus);
+              }
+              return value;
+            });
+          });
+        }
+      } catch (error) {
+        console.error('Error fetching Firestore data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const docRefTiede = db.collection('react-app').doc('TehtäviäKysymysTiede');
+      try {
+        const docSnapshotTiede = await docRefTiede.get();
+        if (docSnapshotTiede.exists) {
+          const dataTiede = docSnapshotTiede.data();
+          const valueFieldsTiede = Object.values(dataTiede);
+
+          const numero = getRandomKysymys(valueFieldsTiede)
+          const vastaus = valueFieldsTiede[numero]
+          setValues((prevValues) => {
+            return prevValues.map((value) => {
+              if (value.includes('tiedeKysymys')) {
+
+                return value.replace('tiedeKysymys', vastaus);
+              }
+              return value;
+            });
+          });
+        }
+      } catch (error) {
+        console.error('Error fetching Firestore data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+  function getRandomKysymys(array) {
+    var length = array.length;
+    var randomNumber = Math.floor(Math.random() * length);
+    return randomNumber;
+  }
 
   function getRandomTeamName(name1, name2) {
     const randomIndex = Math.random() < 0.5 ? 0 : 1;
@@ -84,9 +180,7 @@ function Tehtavia({ tiimi1, tiimi2 }) {
       <button onClick={handleButtonClick}>Tehtäviä</button>
       {showItems && (
         <div>
-
           <h1>Tiimit:</h1>
-
           {tiimitNimet.length > 0 && (
             <div>
               <h2>{tiimitNimet[0]}</h2>
@@ -109,10 +203,7 @@ function Tehtavia({ tiimi1, tiimi2 }) {
           )}
         </div>
       )}
-
     </div>
-
-
   );
 }
 
