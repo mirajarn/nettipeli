@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { db } from './firebase';
-import { TarkistaTehtaviaPop } from './TarkistaTehtaviaPop';
 
 
 function Tehtavia({ tiimi1, tiimi2 }) {
